@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+.calculator {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.readout {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 5px;
+    font-size: 72px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    font-size: 36px;
+}
+
+.btn.big {
+    width: 200px;
+}
+
