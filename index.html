@@ -10,33 +10,33 @@
 <body>
     <div class="container">
         <div class="calculator">
-            <div class="readout">1234</div>
+            <div class="readout">0</div>
             <div class="row">
-                <button class="btn">AC</button>
+                <button class="btn clear">AC</button>
                 <button class="btn nofunc">+/-</button>
                 <button class="btn nofunc">%</button>
                 <button class="btn">/</button>
             </div>
             <div class="row">
-                <button class="btn">7</button>
-                <button class="btn">8</button>
-                <button class="btn">9</button>
+                <button class="btn num">7</button>
+                <button class="btn num">8</button>
+                <button class="btn num">9</button>
                 <button class="btn">X</button>
             </div>
             <div class="row">
-                <button class="btn">4</button>
-                <button class="btn">5</button>
-                <button class="btn">6</button>
+                <button class="btn num">4</button>
+                <button class="btn num">5</button>
+                <button class="btn num">6</button>
                 <button class="btn">-</button>
             </div>
             <div class="row">
-                <button class="btn">1</button>
-                <button class="btn">2</button>
-                <button class="btn">3</button>
+                <button class="btn num">1</button>
+                <button class="btn num">2</button>
+                <button class="btn num">3</button>
                 <button class="btn">+</button>
             </div>
             <div class="row">
-                <button class="btn big">0</button>
+                <button class="btn num big">0</button>
                 <button class="btn nofunc">.</button>
                 <button class="btn">=</button>
             </div>
@@ -44,6 +44,9 @@
     </div>
 
     <script>
+        const readout = document.querySelector('.readout');        
+        let currentReadoutText = readout.textContent;
+        
         let add = (x, y) => x + y;
         let subtract = (x, y) => x - y;
         let multiply = (x, y) => x * y;
@@ -58,6 +61,26 @@
                 default: return 'ERROR'
             }
         }
+
+        function updateReadout(e) {
+            if (currentReadoutText == 0) {
+                currentReadoutText = "" + this.textContent;
+            } else {
+                currentReadoutText = "" + currentReadoutText + this.textContent;
+            }
+            readout.textContent = currentReadoutText; 
+        }
+
+        function clearReadout() {
+            currentReadoutText = 0;
+            readout.textContent = currentReadoutText;
+        }
+
+        const numButtons = document.querySelectorAll('.num');
+        numButtons.forEach(numBtn => numBtn.addEventListener('click', updateReadout));
+
+        const clearBtn = document.querySelector('.clear');
+        clearBtn.addEventListener('click',clearReadout);
     </script>
 </body>
 </html>
