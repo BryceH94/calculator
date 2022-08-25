@@ -15,30 +15,30 @@
                 <button class="btn clear">AC</button>
                 <button class="btn nofunc">+/-</button>
                 <button class="btn nofunc">%</button>
-                <button class="btn">/</button>
+                <button class="btn operator">/</button>
             </div>
             <div class="row">
                 <button class="btn num">7</button>
                 <button class="btn num">8</button>
                 <button class="btn num">9</button>
-                <button class="btn">X</button>
+                <button class="btn operator">X</button>
             </div>
             <div class="row">
                 <button class="btn num">4</button>
                 <button class="btn num">5</button>
                 <button class="btn num">6</button>
-                <button class="btn">-</button>
+                <button class="btn operator">-</button>
             </div>
             <div class="row">
                 <button class="btn num">1</button>
                 <button class="btn num">2</button>
                 <button class="btn num">3</button>
-                <button class="btn">+</button>
+                <button class="btn operator">+</button>
             </div>
             <div class="row">
                 <button class="btn num big">0</button>
                 <button class="btn nofunc">.</button>
-                <button class="btn">=</button>
+                <button class="btn equals">=</button>
             </div>
         </div>
     </div>
@@ -46,8 +46,11 @@
     <script>
         const readout = document.querySelector('.readout');        
         let currentReadoutText = readout.textContent;
+        let workingValue = currentReadoutText;
+        let workingOperator = '';
+        let operationComplete = false;
         
-        let add = (x, y) => x + y;
+        let add = (x, y) => parseInt(x) + parseInt(y);
         let subtract = (x, y) => x - y;
         let multiply = (x, y) => x * y;
         let divide = (x, y) => (y == 0 ? 'ERROR' : x / y);
@@ -56,31 +59,77 @@
             switch(operator) {
                 case '+': return add(x, y);
                 case '-': return subtract(x, y);
-                case '*': return multiply(x, y);
+                case 'X': return multiply(x, y);
                 case '/': return divide(x, y);
                 default: return 'ERROR'
             }
         }
 
         function updateReadout(e) {
-            if (currentReadoutText == 0) {
+            if (currentReadoutText == 0 || workingOperator || operationComplete) {
                 currentReadoutText = "" + this.textContent;
+                operationComplete = false;
             } else {
                 currentReadoutText = "" + currentReadoutText + this.textContent;
             }
             readout.textContent = currentReadoutText; 
         }
 
-        function clearReadout() {
+        function clearState() {
             currentReadoutText = 0;
             readout.textContent = currentReadoutText;
+            workingValue = currentReadoutText;
+            workingOperator = '';
         }
+
+        function updateWorkingState(e) {
+            if (this.textContent == '=') {
+                workingValue = 0;
+                workingOperator = '';
+                operationComplete = true;
+            } else {
+                workingValue = currentReadoutText;
+                workingOperator = this.textContent;
+            }
+        }
+
+        function processOperation(e) {
+            if (this.textContent != workingOperator && workingOperator) {
+                result = operate(workingOperator, 
+                    workingValue, 
+                    currentReadoutText);
+                currentReadoutText = result;
+                readout.textContent = currentReadoutText;
+            }
+        }
+
+        /*
+        When an operator button is clicked, show it is selected
+            and store the current working value
+        If an operator button or the equals sign is clicked
+            when an operator button has already been pushed
+            and another number has been inputted,
+                Process the previously clicked operation using
+                    the stored working value
+                    the current readout value
+                    and the stored operator
+                Un-show the operator as selected unless it is the
+                same as the newly selected operator
+        */
 
         const numButtons = document.querySelectorAll('.num');
         numButtons.forEach(numBtn => numBtn.addEventListener('click', updateReadout));
 
         const clearBtn = document.querySelector('.clear');
-        clearBtn.addEventListener('click',clearReadout);
+        clearBtn.addEventListener('click',clearState);
+
+        const operatorButtons = document.querySelectorAll('.operator');
+        operatorButtons.forEach(opBtn => opBtn.addEventListener('click', processOperation));
+        operatorButtons.forEach(opBtn => opBtn.addEventListener('click', updateWorkingState));
+
+        const equalSign = document.querySelector('.equals');
+        equalSign.addEventListener('click', processOperation);
+        equalSign.addEventListener('click', updateWorkingState);
     </script>
 </body>
 </html>
