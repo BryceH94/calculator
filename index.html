@@ -49,6 +49,7 @@
         let workingValue = currentReadoutText;
         let workingOperator = '';
         let operationComplete = false;
+        let lastButtonIsOp = false;
         
         let add = (x, y) => parseInt(x) + parseInt(y);
         let subtract = (x, y) => x - y;
@@ -70,9 +71,11 @@
                 currentReadoutText = "" + this.textContent;
                 operationComplete = false;
             } else {
+                lastButtonIsOp = false;
                 currentReadoutText = "" + currentReadoutText + this.textContent;
             }
             readout.textContent = currentReadoutText; 
+            lastButtonIsOp = false;
         }
 
         function clearState() {
@@ -80,6 +83,7 @@
             readout.textContent = currentReadoutText;
             workingValue = currentReadoutText;
             workingOperator = '';
+            lastButtonIsOp = false;
         }
 
         function updateWorkingState(e) {
@@ -91,10 +95,11 @@
                 workingValue = currentReadoutText;
                 workingOperator = this.textContent;
             }
+            lastButtonIsOp = true;
         }
 
         function processOperation(e) {
-            if (this.textContent != workingOperator && workingOperator) {
+            if (this.textContent != workingOperator && workingOperator && !lastButtonIsOp) {
                 result = operate(workingOperator, 
                     workingValue, 
                     currentReadoutText);
