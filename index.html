@@ -97,6 +97,10 @@
         }
 
         function updateWorkingState(e) {
+            if (operationComplete && currentReadoutText == 0) {
+                return;
+            }
+
             if (this.textContent == '=') {
                 workingValue = 0;
                 workingOperator = '';
@@ -125,6 +129,10 @@
         }
 
         function highlighSelectedOperator(e) {
+            if (operationComplete && currentReadoutText == 0) {
+                return;
+            }
+
             for (const opBtn of operatorButtons) {
                 opBtn.classList.remove('selected');
             }
