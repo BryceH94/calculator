@@ -48,7 +48,7 @@
         let currentReadoutText = readout.textContent;
         let workingValue = currentReadoutText;
         let workingOperator = '';
-        let operationComplete = false;
+        let operationComplete = true;
         let lastButtonIsOp = false;
         
         let add = (x, y) => parseInt(x) + parseInt(y);
@@ -93,6 +93,7 @@
             for (const opBtn of operatorButtons) {
                 opBtn.classList.remove('selected');
             }
+            operationComplete = true;
         }
 
         function updateWorkingState(e) {
