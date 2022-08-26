@@ -98,24 +98,13 @@
                 result = operate(workingOperator, 
                     workingValue, 
                     currentReadoutText);
+                if (result.toString().includes('.')) {
+                    result = Math.round(result * 1000) / 1000;
+                }
                 currentReadoutText = result;
                 readout.textContent = currentReadoutText;
             }
         }
-
-        /*
-        When an operator button is clicked, show it is selected
-            and store the current working value
-        If an operator button or the equals sign is clicked
-            when an operator button has already been pushed
-            and another number has been inputted,
-                Process the previously clicked operation using
-                    the stored working value
-                    the current readout value
-                    and the stored operator
-                Un-show the operator as selected unless it is the
-                same as the newly selected operator
-        */
 
         const numButtons = document.querySelectorAll('.num');
         numButtons.forEach(numBtn => numBtn.addEventListener('click', updateReadout));
