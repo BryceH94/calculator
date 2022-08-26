@@ -67,6 +67,12 @@
         }
 
         function updateReadout(e) {
+            if (lastButtonIsOp) {
+                for (const opBtn of operatorButtons) {
+                    opBtn.classList.remove('selected');
+                }
+            }
+
             if (currentReadoutText == 0 || workingOperator || operationComplete) {
                 currentReadoutText = "" + this.textContent;
                 operationComplete = false;
