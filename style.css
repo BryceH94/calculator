@@ -38,3 +38,7 @@
 .nofunc {
     background-color: black;
 }
+
+.selected {
+    background-color: gray;
+}

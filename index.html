@@ -91,6 +91,9 @@
                 workingValue = 0;
                 workingOperator = '';
                 operationComplete = true;
+                for (const opBtn of operatorButtons) {
+                    opBtn.classList.remove('selected');
+                }
             } else {
                 workingValue = currentReadoutText;
                 workingOperator = this.textContent;
@@ -111,6 +114,13 @@
             }
         }
 
+        function highlighSelectedOperator(e) {
+            for (const opBtn of operatorButtons) {
+                opBtn.classList.remove('selected');
+            }
+            this.classList.add('selected');
+        }
+
         const numButtons = document.querySelectorAll('.num');
         numButtons.forEach(numBtn => numBtn.addEventListener('click', updateReadout));
 
@@ -120,6 +130,7 @@
         const operatorButtons = document.querySelectorAll('.operator');
         operatorButtons.forEach(opBtn => opBtn.addEventListener('click', processOperation));
         operatorButtons.forEach(opBtn => opBtn.addEventListener('click', updateWorkingState));
+        operatorButtons.forEach(opBtn => opBtn.addEventListener('click', highlighSelectedOperator));
 
         const equalSign = document.querySelector('.equals');
         equalSign.addEventListener('click', processOperation);
