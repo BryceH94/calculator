@@ -73,7 +73,7 @@
                 }
             }
 
-            if (currentReadoutText == 0 || workingOperator || operationComplete) {
+            if (currentReadoutText == 0 || lastButtonIsOp || operationComplete) {
                 currentReadoutText = "" + this.textContent;
                 operationComplete = false;
             } else {
