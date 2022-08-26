@@ -84,6 +84,9 @@
             workingValue = currentReadoutText;
             workingOperator = '';
             lastButtonIsOp = false;
+            for (const opBtn of operatorButtons) {
+                opBtn.classList.remove('selected');
+            }
         }
 
         function updateWorkingState(e) {
