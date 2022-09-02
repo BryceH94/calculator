@@ -116,7 +116,7 @@
         }
 
         function processOperation(e) {
-            if (this.textContent != workingOperator && workingOperator && !lastButtonIsOp) {
+            if (workingOperator && !lastButtonIsOp) {
                 result = operate(workingOperator, 
                     workingValue, 
                     currentReadoutText);
